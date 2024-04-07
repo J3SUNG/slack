@@ -11,7 +11,7 @@
   "author": "J3SUNG",
   "license": "MIT",
   "dependencies": {
-    "@emotion/babel-plugin": "^11.1.2",
+    "@emotion/babel-plugin": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@jjordy/swr-devtools": "^2.0.7",
