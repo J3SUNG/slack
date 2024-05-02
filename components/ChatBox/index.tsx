@@ -34,7 +34,7 @@ const ChatBox: VFC<Props> = ({ chat, onSubmitForm, onChangeChat, placeholder }) 
       if (e.key === 'Enter') {
         if (!e.shiftKey) {
           e.preventDefault();
-          onSubmitForm(e as any);
+          onSubmitForm(e);
         }
       }
     },
