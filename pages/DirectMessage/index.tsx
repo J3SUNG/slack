@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Container, Header } from './styles';
 import gravatar from 'gravatar';
-import { IDM, IUser } from '@typings/db';
+import { IDM } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import { useParams } from 'react-router';
 import ChatBox from '@components/ChatBox';

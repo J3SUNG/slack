@@ -7,10 +7,10 @@ import { Link, Redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const SignUp = () => {
-  const { data, error, mutate } = useSWR('/api/users', fetcher);
+  const { data } = useSWR('/api/users', fetcher);
 
-  const [email, onChangeEmail, setEmail] = useInput('');
-  const [nickname, onChangeNickname, setNickname] = useInput('');
+  const [email, onChangeEmail] = useInput('');
+  const [nickname, onChangeNickname] = useInput('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [mismatchError, setMismatchError] = useState(false);
@@ -45,7 +45,7 @@ const SignUp = () => {
             nickname,
             password,
           })
-          .then((response) => {
+          .then(() => {
             setSignUpSuccess(true);
           })
           .catch((error) => {

@@ -9,11 +9,7 @@ import useSWR from 'swr';
 
 const DMList: FC = () => {
   const { workspace } = useParams<{ workspace?: string }>();
-  const {
-    data: userData,
-    error,
-    mutate,
-  } = useSWR<IUser>('/api/users', fetcher, {
+  const { data: userData } = useSWR<IUser>('/api/users', fetcher, {
     dedupingInterval: 2000,
   });
   const { data: memberData } = useSWR<IUserWithOnline[]>(

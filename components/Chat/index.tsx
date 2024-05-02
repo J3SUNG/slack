@@ -17,7 +17,6 @@ const Chat: VFC<Props> = ({ data }) => {
 
   const result = useMemo(
     () =>
-      // uploads\\서버주소
       data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') ? (
         <img src={`${BACK_URL}/${data.content}`} style={{ maxHeight: 200 }} />
       ) : (
