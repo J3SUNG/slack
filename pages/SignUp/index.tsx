@@ -37,7 +37,6 @@ const SignUp = () => {
     (e) => {
       e.preventDefault();
       if (!mismatchError) {
-        console.log('서버로 회원가입하기');
         setSignUpError('');
         axios
           .post('/api/users', {

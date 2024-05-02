@@ -41,7 +41,6 @@ const Channel = () => {
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(chat);
       if (chat?.trim() && chatData && channelData) {
         const savedChat = chat;
         mutateChat((prevChatData: any) => {
@@ -84,7 +83,6 @@ const Channel = () => {
               scrollbarRef.current.getScrollHeight() <
               scrollbarRef.current.getClientHeight() + scrollbarRef.current.getScrollTop() + 150
             ) {
-              console.log('scrollToBottom!', scrollbarRef.current?.getValues());
               setTimeout(() => {
                 scrollbarRef.current?.scrollToBottom();
               }, 50);
@@ -105,9 +103,7 @@ const Channel = () => {
 
   useEffect(() => {
     if (chatData?.length === 1) {
-      console.log('toBottomWhenLoaded', scrollbarRef.current);
       setTimeout(() => {
-        console.log('scrollbar', scrollbarRef.current);
         scrollbarRef.current?.scrollToBottom();
       }, 500);
     }
@@ -126,7 +122,6 @@ const Channel = () => {
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i++) {
         const file = e.target.files[i].getAsFile();
-        console.log('... file[' + i + '].name = ' + file.name);
         formData.append('image', file);
       }
     }
@@ -136,19 +131,16 @@ const Channel = () => {
   const onDrop = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(e);
       const formData = new FormData();
       if (e.dataTransfer.items) {
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           if (e.dataTransfer.items[i].kind === 'file') {
             const file = e.dataTransfer.items[i].getAsFile();
-            console.log(e, '.... file[' + i + '].name = ' + file.name);
             formData.append('image', file);
           }
         }
       } else {
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          console.log(e, '... file[' + i + '].name = ' + e.dataTransfer.files[i].name);
           formData.append('image', e.dataTransfer.files[i]);
         }
       }
@@ -161,7 +153,6 @@ const Channel = () => {
 
   const onDragOver = useCallback((e) => {
     e.preventDefault();
-    console.log(e);
     setDragOver(true);
   }, []);
 
