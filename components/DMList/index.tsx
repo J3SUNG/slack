@@ -1,6 +1,5 @@
-// import useSocket from '@hooks/useSocket';
 import { CollapseButton } from '@components/DMList/styles';
-// import useSocket from '@hooks/useSocket';
+import useSocket from '@hooks/useSocket';
 import { IUser, IUserWithOnline } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import React, { FC, useCallback, useEffect, useState } from 'react';
@@ -15,13 +14,13 @@ const DMList: FC = () => {
     error,
     mutate,
   } = useSWR<IUser>('/api/users', fetcher, {
-    dedupingInterval: 2000, // 2초
+    dedupingInterval: 2000,
   });
   const { data: memberData } = useSWR<IUserWithOnline[]>(
     userData ? `/api/workspaces/${workspace}/members` : null,
     fetcher,
   );
-  // const [socket] = useSocket(workspace);
+  const [socket] = useSocket(workspace);
   const [channelCollapse, setChannelCollapse] = useState(false);
   const [onlineList, setOnlineList] = useState<number[]>([]);
 
@@ -30,22 +29,18 @@ const DMList: FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('DMList: workspace 바꼈다', workspace);
+    console.log('DMList: workspace 변경', workspace);
     setOnlineList([]);
   }, [workspace]);
 
-  // useEffect(() => {
-  //   socket?.on('onlineList', (data: number[]) => {
-  //     setOnlineList(data);
-  //   });
-  //   // socket?.on('dm', onMessage);
-  //   // console.log('socket on dm', socket?.hasListeners('dm'), socket);
-  //   return () => {
-  //     // socket?.off('dm', onMessage);
-  //     // console.log('socket off dm', socket?.hasListeners('dm'));
-  //     socket?.off('onlineList');
-  //   };
-  // }, [socket]);
+  useEffect(() => {
+    socket?.on('onlineList', (data: number[]) => {
+      setOnlineList(data);
+    });
+    return () => {
+      socket?.off('onlineList');
+    };
+  }, [socket]);
 
   return (
     <>
