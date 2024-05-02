@@ -81,7 +81,7 @@ const ChatBox: VFC<Props> = ({ chat, onSubmitForm, onChangeChat, placeholder }) 
           <Mention
             appendSpaceOnAdd
             trigger="@"
-            data={memberData?.map((v) => ({ id: v.id, display: v.nickname })) || []}
+            data={memberData?.map((v: IUser) => ({ id: v.id, display: v.nickname })) || []}
             renderSuggestion={renderSuggestion}
           />
         </MentionsTextarea>
