@@ -43,7 +43,7 @@ const Channel = () => {
       e.preventDefault();
       if (chat?.trim() && chatData && channelData) {
         const savedChat = chat;
-        mutateChat((prevChatData: any) => {
+        mutateChat((prevChatData) => {
           prevChatData?.[0].unshift({
             id: (chatData[0][0]?.id || 0) + 1,
             content: savedChat,
@@ -74,7 +74,7 @@ const Channel = () => {
   const onMessage = useCallback(
     (data: IChat) => {
       if (data.Channel.name === channel && (data.content.startsWith('uploads\\') || data.UserId !== myData?.id)) {
-        mutateChat((chatData: any) => {
+        mutateChat((chatData) => {
           chatData?.[0].unshift(data);
           return chatData;
         }, false).then(() => {
@@ -186,7 +186,7 @@ const Channel = () => {
         onCloseModal={onCloseModal}
         setShowInviteChannelModal={setShowInviteChannelModal}
       />
-      {dragOver && <DragOver>업로드!</DragOver>}
+      {dragOver && <DragOver>업로드</DragOver>}
     </Container>
   );
 };
