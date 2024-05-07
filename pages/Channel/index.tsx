@@ -26,6 +26,15 @@ const Channel = () => {
   } = useSWRInfinite<IChat[]>(
     (index) => `/api/workspaces/${workspace}/channels/${channel}/chats?perPage=20&page=${index + 1}`,
     fetcher,
+    {
+      onSuccess(data) {
+        if (data?.length === 1) {
+          setTimeout(() => {
+            scrollbarRef.current?.scrollToBottom();
+          }, 100);
+        }
+      },
+    },
   );
   const { data: channelMembersData } = useSWR<IUser[]>(
     myData ? `/api/workspaces/${workspace}/channels/${channel}/members` : null,
@@ -85,7 +94,7 @@ const Channel = () => {
             ) {
               setTimeout(() => {
                 scrollbarRef.current?.scrollToBottom();
-              }, 50);
+              }, 100);
             }
           }
         });
@@ -102,12 +111,8 @@ const Channel = () => {
   }, [socket, onMessage]);
 
   useEffect(() => {
-    if (chatData?.length === 1) {
-      setTimeout(() => {
-        scrollbarRef.current?.scrollToBottom();
-      }, 500);
-    }
-  }, [chatData]);
+    localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
+  }, [workspace, channel]);
 
   const onClickInviteChannel = useCallback(() => {
     setShowInviteChannelModal(true);

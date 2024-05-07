@@ -26,6 +26,15 @@ const DirectMessage = () => {
   } = useSWRInfinite<IDM[]>(
     (index) => `/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=${index + 1}`,
     fetcher,
+    {
+      onSuccess(data) {
+        if (data?.length === 1) {
+          setTimeout(() => {
+            scrollbarRef.current?.scrollToBottom();
+          }, 100);
+        }
+      },
+    },
   );
   const [socket] = useSocket(workspace);
   const isEmpty = chatData?.[0]?.length === 0;
@@ -79,7 +88,7 @@ const DirectMessage = () => {
           ) {
             setTimeout(() => {
               scrollbarRef.current?.scrollToBottom();
-            }, 50);
+            }, 100);
           }
         }
       });
@@ -94,12 +103,8 @@ const DirectMessage = () => {
   }, [socket, onMessage]);
 
   useEffect(() => {
-    if (chatData?.length === 1) {
-      setTimeout(() => {
-        scrollbarRef.current?.scrollToBottom();
-      }, 100);
-    }
-  }, [chatData]);
+    localStorage.setItem(`${workspace}-${id}`, new Date().getTime().toString());
+  }, [workspace, id]);
 
   const onDrop = useCallback(
     (e) => {
